@@ -6,7 +6,12 @@
         <nav id="nav">
             <ul class="content">
                 <li{% if page.body_class == 'accueil' %} class="current"{% endif %}>
-                    <a href="{{ site.url }}/">Accueil</a>
+                    {% raw %}
+                    {{#link-to 'index'}}Accueil{{/link-to}}
+                    {{#link-to 'connection'}}Connection{{/link-to}}
+                    {{title}}
+                    {% endraw %}
+                    <!--                    <a href="{{ site.url }}/">Accueil</a>-->
                 </li>
             </ul>
         </nav>

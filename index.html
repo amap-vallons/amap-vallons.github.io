@@ -2,8 +2,17 @@
 layout: main
 body_class: accueil
 ---
-<section class="main">
+<section id="accueil" class="main">
     <div class="container">
         <h2>Bienvenue sur le site de l'AMAP des Vallons</h2>
+{% raw %}
+ {{App.code}}
+ {{outlet}}
+{% endraw %}
+    </div>
+</section>
+<section id="autre" class="main">
+<div class="container">
+        <h2>Autre page</h2>
     </div>
 </section>

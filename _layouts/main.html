@@ -1,10 +1,25 @@
 {% include top.html %}
 <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
+  <script type="text/x-handlebars" data-template-name="application">
+  <div>
+  {% raw %}
+    {{outlet}}
+  {% endraw %}
+  </div>
   <div class="page">
     {% include header.html %}
     {{ content }}
     <div class="push"></div>
   </div>
   {% include footer.html %}
+  </script>
+  <script type="text/x-handlebars" data-template-name="connection">
+  <div>
+  {% raw %}
+    {{outlet}}
+  {% endraw %}
+  </div>
+  </script>
+  {% include bottom.html %}
 </body>
 </html>
