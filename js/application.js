@@ -18,8 +18,8 @@ App.ApplicationView = Ember.View.extend({
     github: {
         clientId: "c6db152251a712b3c03c",
       authBaseUri: 'https://github.com/login/oauth/authorize',
-      //redirectUri: 'http://amap-vallons.fr/#/oauth',
-      redirectUri: 'http://localhost:4000/#connection/new',
+      redirectUri: 'http://amap-vallons.fr/#connection/new',
+      //redirectUri: 'http://localhost:4000/#connection/new',
       scope: ''
     }
   }
