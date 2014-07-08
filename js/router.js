@@ -1,8 +1,7 @@
 App.Router.map(function() {
   this.resource('index', { path: '/' });
-  this.resource('connection', { path: '/connection' }, function() {
-    this.route('new')
-  });
+  this.resource('connection', { path: '/connection' });
+  this.resource('connection/new', { path: '/connection/new' });
 });
 
 App.ConnectionNewRoute = Ember.Route.extend({
@@ -13,7 +12,13 @@ App.ConnectionNewRoute = Ember.Route.extend({
 
 App.ConnectionRoute = Ember.Route.extend({
   setupController: function(controller, model) {
-      App.oauth.authorize();
+      if (this.get('code')) {
+          return this.get('code');
+      }
+      else {
+          App.oauth.authorize();
+          return [];
+      }
   },
   renderTemplate: function() {
     this.render('connection');
