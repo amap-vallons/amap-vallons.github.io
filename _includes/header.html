@@ -8,7 +8,7 @@
                 <li{% if page.body_class == 'accueil' %} class="current"{% endif %}>
                     {% raw %}
                     {{#link-to 'index'}}Accueil{{/link-to}}
-                    {{#link-to 'connection'}}Connection{{/link-to}}
+                    <a href="#" {{action 'openLogin' 'login' model}}>Connection</a>
                     {{title}}
                     {% endraw %}
                     <!--                    <a href="{{ site.url }}/">Accueil</a>-->

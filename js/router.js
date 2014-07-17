@@ -1,33 +1,29 @@
 App.Router.map(function() {
   this.resource('index', { path: '/' });
-  this.resource('connection', { path: '/connection' });
-  this.resource('connection/new', { path: '/connection/new' });
 });
 
-App.ConnectionNewRoute = Ember.Route.extend({
-  setupController: function() {
-      return this.get('code');
-  },
-});
 
-App.ConnectionRoute = Ember.Route.extend({
-  setupController: function(controller, model) {
-      if (this.get('code')) {
-          return this.get('code');
-      }
-      else {
-          App.oauth.authorize();
-          return [];
-      }
-  },
-  renderTemplate: function() {
-    this.render('connection');
+App.ApplicationRoute = Ember.Route.extend({
+  actions: {
+    openLogin: function(modalName, model) {
+      this.controllerFor(modalName).set('model', model);
+      return this.render(modalName, {
+        into: 'index',
+        outlet: 'login'
+      });
+    },
+
+    closeLogin: function() {
+      return this.disconnectOutlet({
+        outlet: 'login',
+        parentView: 'index'
+      });
+    }
   }
 });
 
 App.IndexRoute = Ember.Route.extend({
-  setupController: function(controller, model) {
-    // Set the IndexController's `title`
-      return [];
+  model: function() {
+    return Em.Object.create({username: "nobody", password: ""});
   }
 });

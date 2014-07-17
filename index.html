@@ -2,17 +2,16 @@
 layout: main
 body_class: accueil
 ---
+<script type="text/x-handlebars" data-template-name="index">
 <section id="accueil" class="main">
     <div class="container">
-        <h2>Bienvenue sur le site de l'AMAP des Vallons</h2>
 {% raw %}
+<h2>Bienvenue {{username}} sur le site de l'AMAP des Vallons</h2>
  {{App.code}}
  {{outlet}}
+ {{outlet login}}
 {% endraw %}
     </div>
-</section>
-<section id="autre" class="main">
-<div class="container">
-        <h2>Autre page</h2>
-    </div>
-</section>
+    </section>
+</script>
+

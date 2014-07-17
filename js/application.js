@@ -1,5 +1,6 @@
 window.App = Ember.Application.create();
 
+/*
 App.ApplicationController = Ember.Controller.extend({
 });
 
@@ -7,25 +8,96 @@ App.ApplicationView = Ember.View.extend({
   templateName : 'application',
   name: 'AMAP'
 })
+*/
 
- Ember.OAuth2.config = {
-    dropbox: {
-      clientId: "o7w96oinqhsc9hh",
-      authBaseUri: 'https://www.dropbox.com/1/oauth2/authorize',
-      redirectUri: 'http://amap-vallons.fr/',
-      scope: ''
+  /* login form */
+/*
+App.LoginController = Ember.ObjectController.extend({
+    username: "",
+    password: "",
+  actions: {
+    login: function() {
+      return this.send('closeLogin');
     },
-    github: {
-        clientId: "c6db152251a712b3c03c",
-      authBaseUri: 'https://github.com/login/oauth/authorize',
-      redirectUri: 'http://amap-vallons.fr/#connection/new',
-      //redirectUri: 'http://localhost:4000/#connection/new',
-      scope: ''
+    close: function() {
+        alert("close LoginController")
+    }
+  },
+});
+*/
+App.LoginController = Ember.Controller.extend({
+  loginFailed: false,
+  isProcessing: false,
+  isSlowConnection: false,
+  timeout: null,
+  username: "",
+  password: "",
+
+  actions : {
+      login: function() {
+        this.setProperties({
+          loginFailed: false,
+          isProcessing: true
+            });
+
+        var controller = this;
+        this.set("timeout", setTimeout(function() {
+            Ember.run(function() {
+                controller.send('slowConnection')
+            })}, 5000));
+
+        var request = $.post("http://localhost:8000/login", this.getProperties("username", "password"));
+        request.then(function() {
+            Ember.run(function () {
+                controller.send('success')
+            })
+        }, function() {
+            Ember.run(function () {
+                controller.send('failure')
+            })
+        });
+      },
+
+      success: function() {
+          this.send('reset');
+          return this.send('closeLogin');
+        //document.location = "/welcome";
+      },
+
+      failure: function() {
+          this.send('reset');
+          this.set("loginFailed", true);
+      },
+
+      slowConnection: function() {
+        this.set("isSlowConnection", true);
+      },
+
+      reset: function() {
+        clearTimeout(this.get("timeout"));
+        this.setProperties({
+          isProcessing: false,
+          isSlowConnection: false
+        });
+      }
+    }
+
+});
+
+App.LoginDialogComponent = Ember.Component.extend({
+  actions: {
+    login: function() {
+      return this.sendAction();
     }
   }
+});
 
-  App.oauth = Ember.OAuth2.create({providerId: 'github'});
+App.User = DS.Model.extend({
+    username: attr(),
+    password: attr(),
+    firstname: attr(),
+    lastname: attr(),
+    email: attr()
+});
 
-  App.oauth.on('success', function(stateObj) { return 'hello, success' } );
 
-  App.oauth.on('error', function(err) { return 'hello, error' } );
