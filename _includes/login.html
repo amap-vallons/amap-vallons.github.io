@@ -1,0 +1,52 @@
+    <script type="text/x-handlebars" data-template-name="login">
+        <div class="login">
+            {% raw %}
+            {{#login-dialog action="close"}}
+                <form class="form-horizontal" {{action "login" on="submit"}}>
+                  {{#if loginFailed}}
+                    <div class="alert">Invalid username or password.</div>
+                  {{/if}}
+
+                  {{#if isSlowConnection}}
+                    <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
+                  {{/if}}
+
+                  <div class="control-group">
+                    <div class="control-label">
+                      <label>Login</label>
+                    </div>
+
+                    <div class="controls">
+                      {{input value=username type="text"}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div class="control-label">
+                      <label>Mot de passe</label>
+                    </div>
+
+                    <div class="controls">
+                      {{input value=password type="password"}}
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary" {{bind-attr disabled="isProcessing"}}>Log in!</button>
+              </form>
+          {{/login-dialog}}
+          {% endraw %}
+        </div>
+    </script>
+
+    <script type="text/x-handlebars" id="components/login-dialog">
+        <div class="overlay">
+        </div>
+        <section id="login" class="main">
+        <div class="login">
+            {% raw %}
+                {{yield}}
+            {% endraw %}
+        </div>
+        </section>
+    </script>
+
