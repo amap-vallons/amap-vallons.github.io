@@ -2,32 +2,34 @@
         <div class="login">
             {% raw %}
             {{#login-dialog action="close"}}
-                <form class="form-horizontal" {{action "login" on="submit"}}>
+                <div class="login-header">
                   {{#if loginFailed}}
-                    <div class="alert">Invalid username or password.</div>
+                    <div class="alert">Nom d'utilisateur ou mot de passe invalide.</div>
                   {{/if}}
 
                   {{#if isSlowConnection}}
-                    <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
-                  {{/if}}
+                    <div class="alert alert-info">La requête prends plus de temps que d'ordinaire. Merci de patienter.</div>
+                    {{/if}}
+                </div>
 
-                  <div class="control-group">
-                    <div class="control-label">
+                <form class="form-horizontal" {{action "login" on="submit"}}>
+                  <div class="form-group control-group">
+                    <div class="form-label control-label">
                       <label>Login</label>
                     </div>
 
                     <div class="controls">
-                      {{input value=username type="text"}}
+                      {{view Ember.TextField id='identification' value=username type="text"}}
                     </div>
                   </div>
 
-                  <div class="control-group">
-                    <div class="control-label">
+                  <div class="form-group control-group">
+                    <div class="form-label control-label">
                       <label>Mot de passe</label>
                     </div>
 
                     <div class="controls">
-                      {{input value=password type="password"}}
+                      {{view Ember.TextField id='password' value=password type="password"}}
                     </div>
                   </div>
 
@@ -42,11 +44,9 @@
         <div class="overlay">
         </div>
         <section id="login" class="main">
-        <div class="login">
             {% raw %}
                 {{yield}}
             {% endraw %}
-        </div>
         </section>
     </script>
 

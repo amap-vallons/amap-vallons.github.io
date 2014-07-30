@@ -1,24 +1,28 @@
-* {
-    font-family: sans-serif;
-}
-
 
 html, body {
-  height: 100%;
+  /*height: 100%;*/
 }
 
 body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
   color: #555;
-  background-image: linear-gradient(white, #FFFFCC);
+  background-image: linear-gradient(white, #FFDD66);
   font-size: 14px;
   line-height: 1.6em;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+p, div {
+  font-family: "Raleway", Helvetica, Arial, sans-serif;
+}
+
 header, section, footer {
-  float: left;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -28,6 +32,9 @@ header, section, footer {
   padding: 10px;
 }
 
+#accueil {
+}
+
 section.main {
   padding: 0px 10px 10px;
 }
@@ -35,6 +42,7 @@ section.main {
 /* Sticky footer */
 
 .page {
+    position:relative;
   clear: both;
   min-height: 100%;
   height: auto !important;
@@ -43,36 +51,72 @@ section.main {
 }
 
 footer, .push {
-  height: 100px;
+  height: 60px;
   margin: 0;
   clear: both;
   position: relative;
+  bottom: -60px;
 }
 
-header {
-    height: 150px;
-/*    background-color:#FFFF99;*/
+#header {
+    position: absolute;
+    height: 180px;
+    width:100%;
     background-image: url('/img/header.jpg');
-    background-clip: border-box;
     background-size: cover;
+    z-index: 4;
 }
-header h1 {
+
+#accueil {
+    position:relative;
+    top:0;
+    padding-top: 180px;
+    z-index: 2;
+}
+
+#header.affix {
+    position: fixed;
+    top: -120px;
+}
+
+#header h1 {
     font-size: 300%;
     text-align: center;
     text-shadow: 2px 2px 5px black;
     color: white;
 }
-header h1 a:link {
+#header h1 a:link {
     text-decoration: none;
     color: white;
 }
-header h1 a:visited {
+#header h1 a:visited {
+    text-decoration: none;
+    color: white;
+}
+#header h2 {
+    font-size: 120%;
+    text-align: center;
+    text-shadow: 2px 2px 5px black;
+    color: white;
+    margin: 0;
+}
+#header h2 a:link {
+    text-decoration: none;
+    color: white;
+}
+#header h2 a:visited {
     text-decoration: none;
     color: white;
 }
 
+/* Navigation buttons */
+nav {
+   margin:0;
+   padding:0;
+   height:70px;
+   
+}
 nav ul {
-  margin: 0;
   padding: 0;
   display: inline-block;
 }
@@ -82,9 +126,17 @@ nav ul {
   margin: .4em .15em;
 }
 
+nav a {
+    padding: 6;
+}
+
+#nav i {
+    padding-right: 6px;
+}
+
+/*
 #nav li a {
   text-decoration: none;
-  color: #718ba8;
   font-weight: bold;
   font-size: 13px;
   padding: 0 0 .3em;
@@ -94,30 +146,37 @@ nav ul {
 }
 
 #nav li a:hover {
-  color: #02a2ee;
   text-shadow: 0 1px 0 rgba(255,255,255,.9);
 }
 
 #nav li.current a, #nav li.current a:hover {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
-  border-bottom-color: #FFDD22;
+  border-bottom-color: #000000;
   box-shadow: inset 0 1px 3px rgba(0,0,0,.2), 0 1px 0 rgba(255,255,255,.5);
   background: #FFDD66;
   background: -webkit-linear-gradient(#FFDD66,#FFFFAA);
   background: -moz-linear-gradient(#FFDD66,#FFFFAA);
   background: -o-linear-gradient(#FFDD66,#FFFFAA);
   background: -ms-linear-gradient(#FFDD66,#FFFFAA);
-  background: linear-gradient(#FFDD66,#FFFFAA);
+  background: round-gradient(#FFDD22,#FFFFAA);
+}
+    */
+.login {
+    position:absolute;
+    margin: auto;
+    left:50%;
+  width: 300px;
 }
 
-
-.login {
-  position: relative;
-  margin: 10px auto;
+/* login overlay */
+#login {
+  position: absolute;
+  margin: auto;
+  left: -50%;
   width: 300px;
   background-color: #fff;
-  padding: 1em;
+  padding: 35px;
 }
 
 input {
