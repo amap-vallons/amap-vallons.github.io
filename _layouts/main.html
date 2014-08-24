@@ -2,9 +2,9 @@
 <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
   <script type="text/x-handlebars" data-template-name="application">
   <div class="page">
-      {% include header.html %}
       {% raw %}
       {{outlet}}
+      {{outlet login}}
       {% endraw %}
     <div class="push"></div>
   </div>
@@ -12,6 +12,8 @@
   </script>
     {{ content }}
   {% include login.html %}
+  {% include header.html %}
+  {% include file.html %}
   {% include bottom.html %}
 </body>
 </html>

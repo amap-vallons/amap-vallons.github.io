@@ -179,7 +179,7 @@ nav a {
   padding: 35px;
 }
 
-input {
+#login input {
   width: 100%;
 }
 
@@ -201,4 +201,26 @@ input {
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
+}
+
+/* file upload */
+#fileupload {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 0px;
+    opacity: 0;
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+.fileinput-button {
+    position:relative;
+    overflow: hidden;
+}
+
+.file-img {
+    width: 70%;
+    margin-left: auto;
 }

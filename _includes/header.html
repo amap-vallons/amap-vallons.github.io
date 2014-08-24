@@ -1,25 +1,29 @@
+<script type="text/x-handlebars" data-template-name="components/header-c">
 <div id="header" data-spy="affix" data-offset-top="120" >
     <div class="container" >
         <h1 id="logo" class="content">
             <a href="{{ site.url }}/" data-escp="">AMAP des Vallons</a>
         </h1>
         <h2>Association pour le Maintien d'une Agriculture Paysanne</h2>
-        <nav id="nav">
-            <ul class="content">
+        <nav class="" style="width:100%" id="nav">
+            <ul class="container">
                 <li{% if page.body_class == 'accueil' %} class="current"{% endif %}>
                     {% raw %}
                     {{#link-to 'index' class="btn btn-default btn-sm"}}<i class="fa fa-home"></i>Accueil{{/link-to}}
-                    {{#if isConnected}}
-                        <a href="#" {{action 'logout' 'login' model}} class="btn btn-default btn-sm"><i class="fa fa-sign-out"></i>Se deconnecter</a>
+                </li>
+                <li class="pull-right current">
+                    {{#if connected}}
+                        <a href="#" {{action 'logout' 'login' model}} class="btn btn-default btn-sm"><i class="fa fa-sign-out"></i>{{model.username}}</a>
                     {{else}}
                         <a href="#" {{action 'openLogin' 'login' model}} class="btn btn-default btn-sm"><i class="fa fa-sign-in"></i>Connection</a>
                     {{/if}}
-                    {{username}}
+                </li>
+                <li class="pull-right">
+                    <p class="">User : </p>
                     {% endraw %}
-                    <!--                    <a href="{{ site.url }}/">Accueil</a>-->
                 </li>
             </ul>
-            </nav>
+        </nav>
     </div>
 </div>
-
+</script>

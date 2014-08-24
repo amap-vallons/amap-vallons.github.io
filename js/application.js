@@ -1,11 +1,68 @@
 window.App = Ember.Application.create();
 
+App.IndexController = Ember.Controller.extend({
+    connected: false,
+});
+
 App.ApplicationController = Ember.Controller.extend({
+});
+
+App.FileMgtComponent = Ember.Component.extend({
     actions: {
-        logout: function() {
+        download: function() {
+            $.fileDownload('https://radiant-temple-1560.herokuapp.com/files/amap.xls', {
+                successCallback: function (url) {
+                    console.log("success");
+                },
+                failCallback: function (html, url) {
+                    alert("File download failed");
+                }
+            });
+        },
+        upload: function() {
+            this.set('uploadInProgress', true)
+            console.log('upload');
+        },
+    },
+    didInsertElement: function() {
+        that = this;
+        $('#fileupload').fileupload({
+            url: 'https://radiant-temple-1560.herokuapp.com/files/amap.xls',
+            type: 'POST',
+            datatype: 'application/ms-excel',
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true,
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                that.set('progressValue', progress);
+                that.set('progressStyle', "width: " + progress + "%;")
+            },
+            done: function (e, data) {
+
+            },
+            send: function (e, data) {
+                that.set('uploadInProgress', true);
+                that.set('progressValue', 0);
+                that.set('progressStyle', "width: " + 0 + "%;")
+                that.sendAction('upload');
+            }
+        });
+    },
+    uploadInProgress: false,
+    progressValue: 0,
+    progressStyle: "width: 0%",
+});
+
+App.HeaderCComponent = Ember.Component.extend({
+    templateName: 'header',
+//    targetObject: Em.computed.alias('parentView'),
+    actions: {
+        logout: function(modalName, model) {
             var request = $.ajax({
                 type:"DELETE",
-                url: "https://radiant-temple-1560.herokuapp.com/login",
+                url: "http://radiant-temple-1560.herokuapp.com/login",
                 crossDomain: true,
                 datatype: 'jsonp',
                 xhrFields: {
@@ -13,26 +70,25 @@ App.ApplicationController = Ember.Controller.extend({
                 },
                 data: this.getProperties("username", "password")
             });
-        }
+           this.sendAction('logout');
+        },
+        openLogin: function(modalName) {
+            this.sendAction('openLogin');
+        },
     },
-    isConnected: (function() {
-      user = this.store.find('user', 'loggedin').catch(function(reason) {
-          return [];
-      });
-      if (user._detail instanceof Array) {
-          return false;
-      }
-      else {
-          return true;
-      }
-    }).property(),
+    /* setup bootstrap affix */
+    didInsertElement : function(){
+        var that = this;
+        Ember.run.schedule('afterRender',function(){
+            that.$('#header').affix({offset:{top: 120} });
+        });
+    }
 });
 
 App.ApplicationView = Ember.View.extend({
   templateName : 'application',
-  name: 'AMAP'
-
-})
+  name: 'AMAP',
+});
 
 App.ApplicationAdapter = DS.RESTAdapter.extend({
   host: 'https://radiant-temple-1560.herokuapp.com',
@@ -43,11 +99,6 @@ App.ApplicationAdapter = DS.RESTAdapter.extend({
       hash.crossDomain = true;
       return this._super(url, type, hash);
   }
-/*  headers: function() {
-    return {
-      "user_session": Ember.get(document.cookie.match(/user_session\=([^;]*)/), "1"),
-    };
-  }.property().volatile()*/
 });
 
 App.User = DS.Model.extend({
@@ -55,80 +106,5 @@ App.User = DS.Model.extend({
     password: DS.attr(),
     fullname: DS.attr(),
     email: DS.attr()
-});
-
-  /* login form */
-App.LoginController = Ember.Controller.extend({
-  loginFailed: false,
-  isProcessing: false,
-  isSlowConnection: false,
-  timeout: null,
-  username: "",
-  password: "",
-
-  actions : {
-      login: function() {
-        this.setProperties({
-          loginFailed: false,
-          isProcessing: true
-            });
-
-        var controller = this;
-        this.set("timeout", setTimeout(function() {
-            Ember.run(function() {
-                controller.send('slowConnection')
-            })}, 5000));
-
-        var request = $.ajax({
-            type:"POST",
-            url: "https://radiant-temple-1560.herokuapp.com/login",
-            crossDomain: true,
-            datatype: 'jsonp',
-            xhrFields: {
-                withCredentials: true,
-            },
-            data: this.getProperties("username", "password")}).done(function() {
-            Ember.run(function () {
-                controller.send('success')
-            })
-        }).fail(function( jqXHR, textStatus) {
-            Ember.run(function () {
-                controller.send('failure')
-            })
-        });
-      },
-
-      success: function() {
-          this.send('reset');
-          return this.send('closeLogin');
-        //document.location = "/welcome";
-      },
-
-      failure: function() {
-          this.send('reset');
-          this.set("loginFailed", true);
-      },
-
-      slowConnection: function() {
-        this.set("isSlowConnection", true);
-      },
-
-      reset: function() {
-        clearTimeout(this.get("timeout"));
-        this.setProperties({
-          isProcessing: false,
-          isSlowConnection: false
-        });
-      }
-    }
-
-});
-
-App.LoginDialogComponent = Ember.Component.extend({
-  actions: {
-    login: function() {
-      return this.sendAction();
-    }
-  }
 });
 

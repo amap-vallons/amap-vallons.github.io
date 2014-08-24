@@ -1,0 +1,33 @@
+<script type="text/x-handlebars" data-template-name="components/file-mgt">
+    <section id="download" class="main">
+    {% raw %}
+        <h2>Fichier des permanences</h2>
+        <div class="container" >
+            <div class="row" >
+                <div class="col-md-8" >
+                    <div class="row" >
+                        <button {{action 'download'}} class="btn btn-default btn-sm"><i class="fa fa-download"></i>Télécharger</button>
+                    </div>
+                    <div class="row fileinput-button" >
+                        <span class="btn btn-default btn-sm">
+                            <i class="fa fa-upload"></i>
+                            <span>Mettre à jour</span>
+                            <input id="fileupload" type="file" name="file" ></input>
+                        </span>
+                        {{#if uploadInProgress}}
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" {{bind-attr aria-valuenow=progressValue style=progressStyle}} aria-valuemin="0" aria-valuemax="100" >
+                                {{progressValue}}%
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="col-md-4" >
+                    <img class="file-img" src="/img/excel.jpg" />
+                </div>
+            </div>
+        </div>
+    {% endraw %}
+    </section>
+</script>

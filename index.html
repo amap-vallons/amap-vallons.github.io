@@ -3,14 +3,13 @@ layout: main
 body_class: accueil
 ---
 <script type="text/x-handlebars" data-template-name="index">
+{% raw %}
+{{header-c connected=connected model=model logout="logout" openLogin="openLogin"}}
 <section id="accueil" class="main">
     <div class="container">
-{% raw %}
-<h2>Bienvenue {{fullname}} sur le site de l'AMAP des Vallons</h2>
- {{App.code}}
+<h2>Bienvenue {{model.fullname}} sur le site de l'AMAP des Vallons</h2>
  {{outlet}}
  {{outlet login}}
- {% endraw %}
  <p>Une AMAP (Association pour le maintien d'une Agriculture Paysanne) est une 
  association entre des producteurs agricoles locaux et des consommateurs.</p>
  <p>Deux à trois fois par an, un contrat est établi entre chaque consomateur et
@@ -30,5 +29,9 @@ body_class: accueil
  tous ensemble et de choisir les référents.</p>
     </div>
     </section>
+    {{#if connected}}
+        {{file-mgt id=id}}
+    {{/if}}
+ {% endraw %}
 </script>
 
