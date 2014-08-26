@@ -31,16 +31,27 @@ App.IndexRoute = Ember.Route.extend({
         },
     },
     setupController: function(controller, user) {
+        console.log(controller);
         controller.set('model', user);
+    },
+    renderTemplate: function(controller, model) {
+        this.render('header', {
+            outlet: 'header',
+            controller: 'header',
+            model: model,
+        });
+        this._super(controller, model);
     },
     model: function() {
         that = this;
         user = this.store.find('user', 'loggedin').then(function(val) {
             that.controllerFor('index').set('connected', true);
+            that.controllerFor('header').set('connected', true);
             return val;
         },
         function() {
             that.controllerFor('index').set('connected', false);
+            that.controllerFor('header').set('connected', false);
             return [];
         });
         return user;

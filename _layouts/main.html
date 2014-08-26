@@ -1,8 +1,9 @@
 {% include top.html %}
 <body {% if page.body_class %}class="{{ page.body_class }}"{% endif %}>
   <script type="text/x-handlebars" data-template-name="application">
-  <div class="page">
       {% raw %}
+      {{outlet header}}
+  <div class="page">
       {{outlet}}
       {{outlet login}}
       {% endraw %}

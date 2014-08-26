@@ -55,36 +55,6 @@ App.FileMgtComponent = Ember.Component.extend({
     progressStyle: "width: 0%",
 });
 
-App.HeaderCComponent = Ember.Component.extend({
-    templateName: 'header',
-//    targetObject: Em.computed.alias('parentView'),
-    actions: {
-        logout: function(modalName, model) {
-            var request = $.ajax({
-                type:"DELETE",
-                url: "http://radiant-temple-1560.herokuapp.com/login",
-                crossDomain: true,
-                datatype: 'jsonp',
-                xhrFields: {
-                    withCredentials: true,
-                },
-                data: this.getProperties("username", "password")
-            });
-           this.sendAction('logout');
-        },
-        openLogin: function(modalName) {
-            this.sendAction('openLogin');
-        },
-    },
-    /* setup bootstrap affix */
-    didInsertElement : function(){
-        var that = this;
-        Ember.run.schedule('afterRender',function(){
-            that.$('#header').affix({offset:{top: 120} });
-        });
-    }
-});
-
 App.ApplicationView = Ember.View.extend({
   templateName : 'application',
   name: 'AMAP',

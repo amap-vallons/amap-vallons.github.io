@@ -1,4 +1,4 @@
-<script type="text/x-handlebars" data-template-name="components/header-c">
+<script type="text/x-handlebars" data-template-name="header">
 <div id="header" data-spy="affix" data-offset-top="120" >
     <div class="container" >
         <h1 id="logo" class="content">
@@ -17,10 +17,6 @@
                     {{else}}
                         <a href="#" {{action 'openLogin' 'login' model}} class="btn btn-default btn-sm"><i class="fa fa-sign-in"></i>Connection</a>
                     {{/if}}
-                </li>
-                <li class="pull-right">
-                    <p class="">User : </p>
-                    {% endraw %}
                 </li>
             </ul>
         </nav>
