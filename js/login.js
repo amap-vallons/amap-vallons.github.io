@@ -22,7 +22,7 @@ App.LoginController = Ember.Controller.extend({
 
             var request = $.ajax({
                 type:"POST",
-                url: "https://radiant-temple-1560.herokuapp.com/login",
+                url: App.URL + "/login",
                 crossDomain: true,
                 datatype: 'jsonp',
                 xhrFields: {
@@ -48,6 +48,7 @@ App.LoginController = Ember.Controller.extend({
 
         success: function(model) {
             this.send('reset');
+            this.set('userId', model.id);
             return this.send('closeLogin', model);
         },
 

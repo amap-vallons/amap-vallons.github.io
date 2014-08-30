@@ -1,16 +1,22 @@
 window.App = Ember.Application.create();
 
+App.URL = 'https://radiant-temple-1560.herokuapp.com';
+//App.URL = 'http://localhost:3000';
+
 App.IndexController = Ember.Controller.extend({
     connected: false,
 });
 
 App.ApplicationController = Ember.Controller.extend({
+    init: function() {
+        moment.locale('fr');
+    }
 });
 
 App.FileMgtComponent = Ember.Component.extend({
     actions: {
         download: function() {
-            $.fileDownload('https://radiant-temple-1560.herokuapp.com/files/amap.xls', {
+            $.fileDownload(App.URL + '/files/amap.xls', {
                 successCallback: function (url) {
                     console.log("success");
                 },
@@ -27,7 +33,7 @@ App.FileMgtComponent = Ember.Component.extend({
     didInsertElement: function() {
         that = this;
         $('#fileupload').fileupload({
-            url: 'https://radiant-temple-1560.herokuapp.com/files/amap.xls',
+            url: App.URL + '/files/amap.xls',
             type: 'POST',
             datatype: 'application/ms-excel',
             crossDomain: true,
@@ -60,8 +66,65 @@ App.ApplicationView = Ember.View.extend({
   name: 'AMAP',
 });
 
+App.ScheduleController = Ember.ArrayController.extend({
+    templateName: 'schedule',
+    itemController: 'dd',
+    datePickInProgress: false,
+    actions: {
+        add: function() {
+            console.log('coucou '+this.get('datePickInProgress'));
+            if (!this.get('datePickInProgress')) {
+                this.set('datePickInProgress', true);
+                controller = this;
+                $('#calendar').datepicker({
+                    language: "fr",
+                    autoclose: true,
+                }).on('changeDate', function(e) {
+                    var date = controller.store.createRecord('date', {
+                        date: e.date,
+                        user: null,
+                    });
+                    date.save();
+                }).on('close', function() {
+                    this.set('datePickInProgress', false);
+                });
+            }
+            return false;
+        },
+    },
+});
+
+App.ScheduleView = Ember.View.extend({
+});
+
+App.DdController = Ember.ObjectController.extend({
+    actions: {
+        take: function() {
+            user = this.store.find('user', 'loggedin');
+            this.set('model.user', user);
+            this.get('model').save();
+        },
+        release: function() {
+            this.set('model.user', null);
+            this.get('model').save();
+        },
+    },
+    mydate: function() {
+        return moment(this.get('model.date')).format('LL');
+    }.property('model.date'),
+    taken: function() {
+        if (this.get('model.user') == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }.property('model.user'),
+});
+
 App.ApplicationAdapter = DS.RESTAdapter.extend({
-  host: 'https://radiant-temple-1560.herokuapp.com',
+  //host: 'http://radiant-temple-1560.herokuapp.com',
+  host: App.URL,
   ajax: function(url, type, hash) {
       if (Ember.isEmpty(hash)) hash = {};
       if (Ember.isEmpty(hash.data)) hash.data = {};
@@ -75,6 +138,11 @@ App.User = DS.Model.extend({
     username: DS.attr(),
     password: DS.attr(),
     fullname: DS.attr(),
-    email: DS.attr()
+    email: DS.attr(),
+    dates: DS.hasMany('date'),
 });
 
+App.Date = DS.Model.extend({
+    date: DS.attr('date'),
+    user: DS.belongsTo('user'),
+});

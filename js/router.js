@@ -29,16 +29,24 @@ App.IndexRoute = Ember.Route.extend({
             this.refresh();
             return this.transitionTo('index');
         },
+        take: function() {
+            this.refresh();
+            console.log('take');
+        },
     },
     setupController: function(controller, user) {
-        console.log(controller);
         controller.set('model', user);
-    },
+   },
     renderTemplate: function(controller, model) {
         this.render('header', {
             outlet: 'header',
             controller: 'header',
             model: model,
+        });
+        this.render('schedule', {
+            outlet: 'schedule',
+            controller: 'schedule',
+            model: this.store.find('date'),
         });
         this._super(controller, model);
     },

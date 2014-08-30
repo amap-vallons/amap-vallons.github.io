@@ -1,0 +1,21 @@
+<script type="text/x-handlebars" data-template-name="schedule">
+<div class="schedule" >
+    <div class="container" >
+        {% raw %}
+        <h1 class="content">Planning des permanences</h1>
+        <p>Voici la liste des permanence pour le 10 prochaines semaines. Pour s'inscrire, il suffit de cliquer sur la date.</p>
+        <ul cmass="container">
+            {{#each controller}}
+                {{#if taken}}
+                    <li class="btn btn-success" {{action release}}>{{mydate}}<br/>{{user.fullname}}</li>
+                {{else}}
+                    <li class="btn btn-danger" {{action take}}>{{mydate}}</li>
+                {{/if}}
+            {{/each}}
+            <li id="calendar" class="btn btn-default" {{action add}}>Ajouter une date</li>
+        </ul>
+        {% endraw %}
+    </div>
+</div>
+</script>
+
