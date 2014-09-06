@@ -1,21 +1,23 @@
+{% raw %}
+<script type="text/x-handlebars" data-template-name="components/datepicker-button">
+    <li id="datepicker" class="datepicker btn btn-default" {{action 'add'}}>Ajouter une date</li>
+</script>
 <script type="text/x-handlebars" data-template-name="schedule">
 <div class="schedule" >
     <div class="container" >
-        {% raw %}
-        <h1 class="content">Planning des permanences</h1>
+        <h2 class="content">Planning des permanences</h2>
         <p>Voici la liste des permanences pour les 10 prochaines semaines. Pour s'inscrire, il suffit de cliquer sur la date.</p>
-        <ul cmass="container">
-            {{#each controller}}
-                {{#if taken}}
-                    <li class="btn btn-success" {{action release}}>{{mydate}}<br/>{{user.fullname}}</li>
+        <ul class="container">
+            {{#each date in controller}}
+                {{#if date.taken}}
+                    <li class="btn btn-success" {{action release}}>{{date.mydate}}<br/>{{date.user.fullname}}</li>
                 {{else}}
-                    <li class="btn btn-danger" {{action take}}>{{mydate}}</li>
+                    <li class="btn btn-danger" {{action take}}>{{date.mydate}}</li>
                 {{/if}}
             {{/each}}
-            <li id="calendar" class="btn btn-default" {{action add}}>Ajouter une date</li>
+            {{datepicker-button store=store newDate=newDate}}
         </ul>
-        {% endraw %}
     </div>
 </div>
 </script>
-
+{% endraw %}

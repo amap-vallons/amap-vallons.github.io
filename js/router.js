@@ -46,7 +46,12 @@ App.IndexRoute = Ember.Route.extend({
         this.render('schedule', {
             outlet: 'schedule',
             controller: 'schedule',
-            model: this.store.find('date'),
+            model: this.store.find('date', { from: new Date(), count: 10 }),
+        });
+        this.render('users', {
+            outlet: 'users',
+            controller: 'users',
+            model: this.store.find('user'),
         });
         this._super(controller, model);
     },
