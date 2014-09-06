@@ -99,6 +99,7 @@ footer, .push {
     text-shadow: 2px 2px 5px black;
     color: white;
     margin: 0;
+    padding-bottom: 3px;
 }
 #header h2 a:link {
     text-decoration: none;
