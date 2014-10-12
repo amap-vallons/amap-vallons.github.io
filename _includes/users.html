@@ -1,46 +1,4 @@
 {% raw %}
-<script type="text/x-handlebars" data-template-name="components/users-list">
-    <table class="table">
-        <tr>
-            <th>Nom</th>
-            <th>Courriel</th>
-            <th>Admin</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        {{#each users}}
-            {{#if id}}
-        <tr>
-            <td>{{fullname}}</td>
-            <td>{{email}}</td>
-            <td>{{admin}}</td>
-            <td><i class="btn fa fa-edit" {{action edit id}}></i></td>
-            <td><i class="btn fa fa-times" {{action delete id}}></i></td>
-        </tr>
-            {{/if}}
-        {{/each}}
-    </table>
-</script>
-<script type="text/x-handlebars" data-template-name="components/users-edit">
-    <form role="form">
-        <div class="form-group">
-            <label for="username">Login</label>
-            {{view Ember.TextField class="form-control" value=username type="text"}}
-        </div>
-        <div class="form-group">
-            <label for="fullname">Prenom & Nom</label>
-            {{view Ember.TextField class="form-control" value=fullname type="text"}}
-        </div>
-        <div class="form-group">
-            <label for="email">Adresse courriel</label>
-            {{view Ember.TextField class="form-control" value=email type="email"}}
-        </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            {{view Ember.TextField class="form-control" value=password type="password"}}
-        </div>
-    </form>
-</script>
 <script type="text/x-handlebars" data-template-name="users">
     <div class="users" >
         <div class="container" >
@@ -53,10 +11,49 @@
             </nav>
             <div class="container-fluid">
             {{#if list}}
-                {{users-list users=users edit=edit delete=delete}}
+                <table class="table">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Courriel</th>
+                        <th>Admin</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {{#each users}}
+                        {{#if id}}
+                    <tr>
+                        <td>{{fullname}}</td>
+                        <td>{{email}}</td>
+                        <td>{{admin}}</td>
+                        <td><i class="btn fa fa-edit" {{action edit id}}></i></td>
+                        <td><i class="btn fa fa-times" {{action delete id}}></i></td>
+                    </tr>
+                        {{/if}}
+                    {{/each}}
+                </table>
             {{/if}}
             {{#if edit}}
-                {{users-edit model=model}}
+                <form class="userForm" role="form">
+                    <div class="form-group">
+                        <label for="username">Login</label>
+                        {{view Ember.TextField class="form-control" value=model.username type="text"}}
+                    </div>
+                    <div class="form-group">
+                        <label for="fullname">Prenom & Nom</label>
+                        {{view Ember.TextField class="form-control" value=model.fullname type="text"}}
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse courriel</label>
+                        {{view Ember.TextField class="form-control" value=model.email type="email"}}
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        {{view Ember.TextField class="form-control" value=model.password type="password"}}
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" {{action submit}}>Valider</button>
+                    </div>
+                </form>
             {{/if}}
             </div>
         </div>

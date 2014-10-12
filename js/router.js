@@ -43,15 +43,19 @@ App.IndexRoute = Ember.Route.extend({
             controller: 'header',
             model: model,
         });
-        this.render('schedule', {
-            outlet: 'schedule',
-            controller: 'schedule',
-            model: this.store.find('date', { from: new Date(), count: 10 }),
-        });
-        this.render('users', {
-            outlet: 'users',
-            controller: 'users',
-            model: this.store.find('user'),
+        that = this;
+        // add schedule and users only if user is logged on
+        this.store.find('user', 'loggedin').then(function(val) {
+            that.render('schedule', {
+                outlet: 'schedule',
+                controller: 'schedule',
+                model: that.store.find('date', { from: new Date(), count: 10 }),
+            });
+            that.render('users', {
+                outlet: 'users',
+                controller: 'users',
+                model: that.store.find('user'),
+            });
         });
         this._super(controller, model);
     },
