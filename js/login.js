@@ -28,7 +28,7 @@ App.LoginController = Ember.Controller.extend({
                 xhrFields: {
                     withCredentials: true,
                 },
-                data: this.getProperties("username", "password")}).done(function() {
+                data: this.getProperties("email", "password")}).done(function() {
                     Ember.run(function () {
                         controller.send('success', model)
                     })
